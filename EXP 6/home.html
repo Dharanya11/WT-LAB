@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Management</title>
+</head>
+<body>
+    <h2>Student Management</h2>
+    
+    <label for="name">Name:</label>
+    <input type="text" id="name" required><br><br>
+
+    <label for="rollNumber">Roll Number:</label>
+    <input type="text" id="rollNumber" required><br><br>
+
+    <label for="department">Department:</label>
+    <input type="text" id="department"><br><br>
+
+    <label for="cgpa">CGPA:</label>
+    <input type="number" id="cgpa" step="0.01"><br><br>
+
+    <label for="email">Email:</label>
+    <input type="email" id="email"><br><br>
+
+    <label for="phone">Phone:</label>
+    <input type="text" id="phone"><br><br>
+
+    <label for="dob">Date of Birth:</label>
+    <input type="date" id="dob"><br><br>
+
+    <label for="yearOfPassing12th">Year of Passing (12th):</label>
+    <input type="number" id="yearOfPassing12th"><br><br>
+
+    <label for="percentage12th">12th Percentage:</label>
+    <input type="number" id="percentage12th" step="0.01"><br><br>
+
+    <label for="github">GitHub:</label>
+    <input type="url" id="github"><br><br>
+
+    <label for="linkedin">LinkedIn:</label>
+    <input type="url" id="linkedin"><br><br>
+
+    <label for="leetcodeProblemsSolved">LeetCode Problems Solved:</label>
+    <input type="number" id="leetcodeProblemsSolved"><br><br>
+
+    <button onclick="registerStudent()">Register</button>
+    <button onclick="fetchStudent()">Read Student</button>
+    <button onclick="updateStudent()">Update Student</button>
+    <button onclick="deleteStudent()">Delete Student</button>
+
+    <h3>Result:</h3>
+    <p id="result"></p>
+
+    <script>
+        function registerStudent() {
+            const student = {
+                name: document.getElementById("name").value,
+                rollNumber: document.getElementById("rollNumber").value,
+                department: document.getElementById("department").value,
+                cgpa: document.getElementById("cgpa").value,
+                email: document.getElementById("email").value,
+                phone: document.getElementById("phone").value,
+                dob: document.getElementById("dob").value, 
+                yearOfPassing12th: document.getElementById("yearOfPassing12th").value,
+                percentage12th: document.getElementById("percentage12th").value,
+                github: document.getElementById("github").value,
+                linkedin: document.getElementById("linkedin").value,
+                leetcodeProblemsSolved: document.getElementById("leetcodeProblemsSolved").value
+            };
+
+            fetch("/register", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(student)
+            })
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById("result").innerText = data;
+            })
+            .catch(error => {
+                document.getElementById("result").innerText = "Error Registering Student!";
+                console.error("Error:", error);
+            });
+        }
+
+        function fetchStudent() {
+            const rollNumber = document.getElementById("rollNumber").value;
+
+            fetch(`/read?rollNumber=${rollNumber}`)
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById("result").innerHTML = data;
+                })
+                .catch(error => {
+                    document.getElementById("result").innerText = "❌ Error Fetching Student!";
+                    console.error("Error:", error);
+                });
+        }
+
+        function updateStudent() {
+            const rollNumber = document.getElementById("rollNumber").value;
+            const field = prompt("Enter the field you want to update (e.g., department, cgpa, email, phone, github):");
+            const value = prompt(`Enter new value for ${field}:`);
+
+            if (!field || !value) {
+                document.getElementById("result").innerText = "❌ Update Cancelled!";
+                return;
+            } 
+
+            const updateData = { rollNumber };
+            updateData[field] = value;
+
+            fetch("/update", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(updateData)
+            })
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById("result").innerText = data;
+            })
+            .catch(error => {
+                document.getElementById("result").innerText = "❌ Error Updating Student!";
+                console.error("Error:", error);
+            });
+        }
+
+        function deleteStudent() {
+            const rollNumber = document.getElementById("rollNumber").value;
+
+            fetch("/delete", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ rollNumber })
+            })
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById("result").innerText = data;
+            })
+            .catch(error => {
+                document.getElementById("result").innerText = "Error Deleting Student!";
+                console.error("Error:", error);
+            });
+        }
+    </script>
+</body>
+</html>

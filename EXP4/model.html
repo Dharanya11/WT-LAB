@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Bill Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+            background-color: blueviolet;
+        }
+        table {
+            width: 50%;
+            margin: auto;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 2px solid black;
+            padding: 10px;
+            text-align: center;
+        }
+        button {
+            margin-top: 10px;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Bill Calculator</h2>
+    <label>Item Name:</label>
+    <input type="text" id="item"><br><br>
+    <label>Quantity:</label>
+    <input type="number" id="quantity"><br><br>   
+    <label>Price:</label>
+    <input type="number" id="price"><br><br>
+    <button onclick="addItem()">Add Item</button>
+    <h3>Bill</h3>
+    <table>
+        <tr>
+            <th>Item</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Total</th>
+        </tr>
+        <tbody id="billTable"></tbody>
+    </table>
+    <h3>Total Bill: ₹<span id="totalAmount">0.00</span></h3>
+    
+    <script>
+        let totalAmount = 0;
+        
+        function addItem() {
+            let item = document.getElementById("item").value;
+            let quantity = document.getElementById("quantity").value;
+            let price = document.getElementById("price").value;
+            
+            if (item === "" || quantity === "" || price === "" || quantity <= 0 || price <= 0) {
+                alert("Please enter valid details!");
+                return;
+            }
+
+            let total = quantity * price;
+            totalAmount += total;
+
+            let table = document.getElementById("billTable");
+            let row = "<tr>" +
+                      "<td>" + item + "</td>" +
+                      "<td>" + quantity + "</td>" +
+                      "<td>₹" + price + "</td>" +
+                      "<td>₹" + total + "</td>" +
+                      "</tr>";
+            table.innerHTML += row;
+            document.getElementById("totalAmount").innerText = totalAmount;
+            document.getElementById("item").value = "";
+            document.getElementById("quantity").value = "";
+            document.getElementById("price").value = "";
+        }
+    </script>
+</body>
+</html>

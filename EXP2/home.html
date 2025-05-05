@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Sharptown - Home</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <style>
+        body {
+            background: url('bg.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: white;
+        }
+        .product-card {
+            max-width: 250px;
+            margin: 15px;  
+            padding: 10px;
+        }
+        .product-card img {
+            height: 150px;
+            object-fit: cover;
+        }
+        .navbar-brand img {
+            height: 50px;
+            margin-right: 10px;
+        }
+        .total-section {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <img src="logo.png" alt="Sharptown Logo"> Sharptown
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#shop">Shop</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+                    <li class="nav-item"><a class="nav-link" href="signup.html">Sign up</a></li>
+                    <li class="nav-item"><a class="nav-link" href="login.html">Login</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>    
+    <h1><b><center>Welcome to sharptown</center></b></h1>
+    <!-- Shop Section -->
+    <section id="shop" class="container my-5">
+        <div class="row">
+            <script>
+                const products = [
+                    { name: "Laptop", price: 999.99, image: "laptop.jpg" },
+                    { name: "Smartphone", price: 499.99, image: "phone.jpg" },
+                    { name: "Headphones", price: 99.99, image: "headphone.jpg" },
+                    { name: "Smartwatch", price: 199.99, image: "smartwatch.jpg" },
+                    { name: "Tablet", price: 299.99, image: "tablet.jpg" },
+                    { name: "Camera", price: 599.99, image: "camera.jpg" },
+                    { name: "Monitor", price: 399.99, image: "monitor.jpg" },
+                    { name: "Printer", price: 149.99, image: "printer.jpg" },
+                    { name: "Gaming Console", price: 499.99, image: "console.jpg" },
+                    { name: "Keyboard", price: 49.99, image: "keyboard.jpg" },
+                    { name: "Mouse", price: 29.99, image: "mouse.jpg" },
+                    { name: "Speaker", price: 79.99, image: "speaker.jpg" },
+                    { name: "Router", price: 89.99, image: "router.jpg" },
+                    { name: "External HDD", price: 129.99, image: "hdd.jpg" },
+                    { name: "USB Flash Drive", price: 19.99, image: "usb.jpg" },
+                    { name: "Power Bank", price: 59.99, image: "powerbank.jpg" },
+                    { name: "VR Headset", price: 299.99, image: "vr.jpg" },
+                    { name: "Graphics Card", price: 899.99, image: "gpu.jpg" },
+                    { name: "Microphone", price: 109.99, image: "mic.jpg" },
+                    { name: "Drone", price: 999.99, image: "drone.jpg" }
+                ];
+
+                let totalAmount = 0;
+
+                function addToCart(price) {
+                    totalAmount += price;
+                    document.getElementById("total-amount").innerText = totalAmount.toFixed(2);
+                }
+                function buyNow(price) {
+                      totalAmount += price;
+                       document.getElementById("total-amount").innerText = totalAmount.toFixed(2);
+                      checkout();
+                }
+                function checkout() {
+                    if (totalAmount === 0) {
+                        alert("Your cart is empty!");
+                        return;
+                    }
+                    new bootstrap.Modal(document.getElementById('paymentModal')).show();
+                }
+
+                products.forEach(product => {
+                    document.write(`
+                        <div class="col-md-3">
+                            <div class="card product-card">
+                                <img src="${product.image}" class="card-img-top" alt="${product.name}">
+                                <div class="card-body">
+                                    <h5 class="card-title">${product.name}</h5>
+                                    <p class="card-text">$${product.price.toFixed(2)}</p>
+                                    <button class="btn btn-success" onclick="addToCart(${product.price})">Add to Cart</button>
+                                    <button class="btn btn-primary" onclick="buyNow(${product.price})" data-bs-target="#paymentModal">Buy Now</button>
+                                </div>
+                            </div>
+                        </div>
+                    `);
+                });
+            </script>
+        </div>
+    </section>
+
+    <div class="total-section">
+        Total Amount: $<span id="total-amount">0.00</span>
+        <button class="btn btn-primary" onclick="checkout()" data-bs-target="#paymentModal">Checkout</button>
+    </div>
+
+<!-- Payment Modal -->
+<div class="modal fade" id="paymentModal" tabindex="-1" aria-labelledby="paymentModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="paymentModalLabel">Choose Payment Method</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <!-- Payment Options -->
+                    <div class="mb-3">
+                        <label class="form-label">Select Payment Method</label>
+                        <select class="form-select" id="paymentMethod">
+                            <option value="card">Credit/Debit Card</option>
+                            <option value="paypal">PayPal</option>
+                            <option value="upi">UPI</option>
+                            <option value="cod">Cash on Delivery</option>
+                        </select>
+                    </div>
+
+                    <!-- Card Payment Fields -->
+                    <div id="cardDetails" style="display: none;">
+                        <div class="mb-3">
+                            <label class="form-label">Card Number</label>
+                            <input type="text" class="form-control" placeholder="XXXX XXXX XXXX XXXX">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Expiry Date</label>
+                            <input type="text" class="form-control" placeholder="MM/YY">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">CVV</label>
+                            <input type="password" class="form-control" placeholder="123">
+                        </div>
+                    </div>
+
+                    <!-- UPI Payment Field -->
+                    <div id="upiDetails" style="display: none;">
+                        <label class="form-label">Enter UPI ID</label>
+                        <input type="text" class="form-control" placeholder="yourupi@bank">
+                    </div>
+
+                    <!-- PayPal Payment Field -->
+                    <div id="paypalDetails" style="display: none;">
+                        <p>Click the button below to proceed with PayPal.</p>
+                        <button class="btn btn-warning">Pay with PayPal</button>
+                    </div>
+
+                    <!-- Confirmation Button -->
+                    <button type="button" class="btn btn-success mt-3" onclick="confirmPayment()">Proceed to Pay</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    document.getElementById('paymentMethod').addEventListener('change', function() {
+        document.getElementById('cardDetails').style.display = this.value === 'card' ? 'block' : 'none';
+        document.getElementById('upiDetails').style.display = this.value === 'upi' ? 'block' : 'none';
+        document.getElementById('paypalDetails').style.display = this.value === 'paypal' ? 'block' : 'none';
+    });
+</script>
+    <script>
+
+        function checkout() {
+            if (totalAmount === 0) {
+                alert("Your cart is empty!");
+                return;
+            }
+            new bootstrap.Modal(document.getElementById('paymentModal')).show();
+        }
+        function buyNow(price) {
+                    totalAmount += price;
+                    document.getElementById("total-amount").innerText = totalAmount.toFixed(2);
+                    checkout();
+                }
+        function confirmPayment() {
+            let method = document.getElementById("paymentMethod").value;
+            if (method === "cod") {
+                alert("Your order has been placed with Cash on Delivery!");
+            } else {
+                alert("Payment of $" + totalAmount.toFixed(2) + " successful!");
+            }
+            totalAmount = 0;
+            document.getElementById("total-amount").innerText = "0.00";
+        }
+        function sendFeedback() {
+             alert("Thank you for your message! We will get back to you soon.");
+        }
+        function clearForm() {
+            document.querySelector("#contact form").reset();
+        }
+
+    </script>
+<!-- About Section -->
+<section id="about" class="container my-5" style="color: white;">
+    <h2>About Us</h2>
+    <p>We provide high-quality products at the best prices.</p>
+</section>
+
+<!-- Contact Section -->
+<section id="contact" class="container my-5" style="color: white;">
+    <h2>Contact Us</h2>
+    <form name="myform" onsubmit="return validate()">
+        <div class="mb-3">
+            <label class="form-label">Name</label>
+            <input type="text" class="form-control" name="fname">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Rollno</label>
+            <input type="text" class="form-control" name="Rname">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Email</label>
+            <input type="email" class="form-control" name="mail">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Mobileno</label>
+            <input type="text" class="form-control" name="mobileno">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Message</label>
+            <textarea class="form-control" name="message"></textarea>
+        </div>
+        <button class="btn btn-primary" type="submit">Submit</button>
+        <button class="btn btn-secondary" type="button" onclick="clearForm()">Clear</button>
+    </form>
+    <script>
+    function validate() {
+        let x = document.forms["myform"]["fname"].value;
+        let y = document.forms["myform"]["Rname"].value;
+        let z = document.forms["myform"]["mail"].value;
+        let Z = document.forms["myform"]["mobileno"].value;
+        let X = document.forms["myform"]["message"].value;
+    
+        if (x == "" || y == "" || z == "" || Z == "" || X == "") {
+            alert("Please fill in all the details");
+            return false;
+        } else if (x.charAt(0) < 'A' || x.charAt(0) > 'Z') {
+            alert("Please start with a capital letter for the name");
+            return false;
+        } else if (!y.startsWith("23ITR") && !y.startsWith("23itr")) {
+            alert("Please enter a valid roll number.");
+            return false;
+        } else if (!z.includes("@")) {
+            alert("Please enter a valid email format.");
+            return false;
+        } else if (Z.length !== 10 || isNaN(Z)) {
+            alert("Please enter a valid phone number.");
+            return false;
+        } else if (X.trim() === "") {
+            alert("Please enter a message.");
+            return false;
+        } else {
+            alert("Form submitted successfully!");
+            return true; // This ensures form is submitted
+        }
+    }
+    
+    function clearForm() {
+        document.forms["myform"].reset();
+    }
+    </script>
+</section>
+    
+<!-- Footer Section -->
+<footer class="bg-dark text-white text-center py-3">
+    <div class="container">
+        <img src="footer-logo.png" alt="Sharptown Logo" style="height: 50px; margin-bottom: 10px;">
+        <p>&copy; 2025 Sharptown. All rights reserved.</p>
+        <p>Follow us on:</p>
+        <a href="#" class="text-white mx-2"><img src="f.png" alt="Facebook" style="height: 25px;"></a>
+        <a href="#" class="text-white mx-2"><img src="t.png" alt="Twitter" style="height: 25px;"></a>
+        <a href="#" class="text-white mx-2"><img src="i.png" alt="Instagram" style="height: 25px;"></a>
+    </div>
+</footer>
+</body>
+</html>
