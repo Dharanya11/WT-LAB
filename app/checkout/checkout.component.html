@@ -1,0 +1,9 @@
+<!-- checkout.component.html -->
+<div *ngIf="errorMessage" class="error-message">
+  {{ errorMessage }}
+</div>
+
+<button (click)="onPurchase()" [disabled]="isLoading">
+  <span *ngIf="!isLoading">Buy Now</span>
+  <span *ngIf="isLoading">Processing...</span>
+</button>

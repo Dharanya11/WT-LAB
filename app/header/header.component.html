@@ -1,0 +1,16 @@
+<!-- src/app/header/header.component.html -->
+<header>
+  <nav>
+    <div class="left-nav">
+      <a routerLink="/">Home</a>
+      <a routerLink="/about">About</a>
+      <a routerLink="/contact">Contact</a>
+      <a routerLink="/products">Products</a>
+    </div>
+    <div class="right-nav">
+      <button *ngIf="!isLoggedIn" (click)="openLogin()">Login</button>
+      <button *ngIf="!isLoggedIn" (click)="openSignup()">Sign Up</button>
+      <button *ngIf="isLoggedIn" (click)="logout()">Logout</button>
+    </div>
+  </nav>
+</header>

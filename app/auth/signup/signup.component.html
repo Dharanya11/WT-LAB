@@ -1,0 +1,55 @@
+<div class="signup-container">
+  <div class="card">
+    <h2>Create Account</h2>
+    
+    <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input 
+          type="text" 
+          id="username"
+          formControlName="username"
+          placeholder="Choose a username">
+        <div *ngIf="signupForm.get('username')?.invalid && signupForm.get('username')?.touched"
+             class="error-message">
+          Username must be at least 3 characters
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input 
+          type="password" 
+          id="password"
+          formControlName="password"
+          placeholder="Choose a password">
+        <div *ngIf="signupForm.get('password')?.invalid && signupForm.get('password')?.touched"
+             class="error-message">
+          Password must be at least 6 characters
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="confirmPassword">Confirm Password</label>
+        <input 
+          type="password" 
+          id="confirmPassword"
+          formControlName="confirmPassword"
+          placeholder="Confirm your password">
+      </div>
+
+      <div *ngIf="errorMessage" class="error-message">
+        {{ errorMessage }}
+      </div>
+
+      <button type="submit" [disabled]="signupForm.invalid || isLoading">
+        <span *ngIf="!isLoading">Sign Up</span>
+        <span *ngIf="isLoading">Creating account...</span>
+      </button>
+    </form>
+
+    <div class="footer">
+      Already have an account? <a routerLink="/login">Log in</a>
+    </div>
+  </div>
+</div>

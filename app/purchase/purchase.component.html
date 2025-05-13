@@ -1,0 +1,29 @@
+<!-- src/app/purchase/purchase.component.html -->
+<div class="purchase-container">
+  <h2>Make a Purchase</h2>
+  
+  <form (ngSubmit)="onSubmit()" *ngIf="!successMessage">
+    <div class="form-group">
+      <label for="productId">Product ID</label>
+      <input type="text" id="productId" [(ngModel)]="orderData.productId" name="productId" required>
+    </div>
+    
+    <div class="form-group">
+      <label for="quantity">Quantity</label>
+      <input type="number" id="quantity" [(ngModel)]="orderData.quantity" name="quantity" min="1" required>
+    </div>
+    
+    <button type="submit" [disabled]="isLoading">
+      <span *ngIf="!isLoading">Purchase</span>
+      <span *ngIf="isLoading">Processing...</span>
+    </button>
+  </form>
+
+  <div *ngIf="successMessage" class="alert success">
+    {{ successMessage }}
+  </div>
+  
+  <div *ngIf="errorMessage" class="alert error">
+    {{ errorMessage }}
+  </div>
+</div>

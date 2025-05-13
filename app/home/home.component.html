@@ -1,0 +1,48 @@
+<div class="home-page">
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Welcome to TechShop</h1>
+      <p>Discover the latest gadgets and electronics</p>
+      <a routerLink="/products" class="cta-button">Shop Now</a>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="features">
+    <div class="feature">
+      <div class="icon">🚚</div>
+      <h3>Free Shipping</h3>
+      <p>On orders over $50</p>
+    </div>
+    <div class="feature">
+      <div class="icon">🔄</div>
+      <h3>Easy Returns</h3>
+      <p>30-day guarantee</p>
+    </div>
+    <div class="feature">
+      <div class="icon">🔒</div>
+      <h3>Secure Payment</h3>
+      <p>100% protected</p>
+    </div>
+  </section>
+
+  <!-- Categories Section -->
+  <section class="categories">
+    <h2>Shop by Category</h2>
+    <div class="category-grid">
+      <div *ngFor="let category of featuredCategories" class="category-card">
+        <img [src]="category.image" [alt]="category.name">
+        <div class="category-overlay">
+          <a [routerLink]="category.route">{{ category.name }}</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Call to Action -->
+  <section class="cta-section">
+    <h2>Ready to upgrade your tech?</h2>
+    <a routerLink="/products" class="cta-button">Browse All Products</a>
+  </section>
+</div>

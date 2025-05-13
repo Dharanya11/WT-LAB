@@ -1,0 +1,33 @@
+<div class="products-page">
+  <div class="header">
+    <h1>Our Products</h1>
+    <p>Discover our wide range of quality items</p>
+  </div>
+
+  <div *ngIf="isLoading" class="loading">
+    <div class="spinner"></div>
+    <p>Loading products...</p>
+  </div>
+
+  <div *ngIf="!isLoading" class="product-grid">
+    <div *ngFor="let product of products" class="product-card">
+      <div class="product-image">
+        <img [src]="product.image || 'https://picsum.photos/300/200?random=' + product.id" [alt]="product.name">
+      </div>
+      <div class="product-info">
+        <h3>{{ product.name }}</h3>
+        <p class="description" *ngIf="product.description">{{ product.description }}</p>
+        <p class="price">${{ product.price.toFixed(2) }}</p>
+        <div class="actions">
+          <button class="add-to-cart" (click)="addToCart(product)">
+            <span class="button-icon">🛒</span> Add to Cart
+          </button>
+          <button class="buy-now" (click)="buyNow(product)">
+  <span class="button-icon">⚡</span> Buy Now
+</button>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

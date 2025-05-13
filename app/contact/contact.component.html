@@ -1,0 +1,86 @@
+<div class="contact-section">
+  <h1>Contact Us</h1>
+  <p>Have questions? We'd love to hear from you!</p>
+
+  @if (!isSubmitted) {
+    <div class="contact-container">
+      <div class="contact-info">
+        <h2>Our Info</h2>
+        <p><strong>Email:</strong> contact&#64;example.com</p>
+        <p><strong>Phone:</strong> (123) 456-7890</p>
+        <p><strong>Address:</strong> 123 Store Street, City</p>
+      </div>
+
+      <form [formGroup]="contactForm" (ngSubmit)="submitForm()" class="contact-form">
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input type="text" id="name" formControlName="name">
+          @if (f.name.touched && f.name.errors) {
+            <div class="error-message">
+              @if (f.name.errors['required']) {
+                <div>Name is required</div>
+              }
+              @if (f.name.errors['minlength']) {
+                <div>Name must be at least 2 characters</div>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" formControlName="email">
+          @if (f.email.touched && f.email.errors) {
+            <div class="error-message">
+              @if (f.email.errors['required']) {
+                <div>Email is required</div>
+              }
+              @if (f.email.errors['email']) {
+                <div>Please enter a valid email</div>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="form-group">
+          <label for="phone">Phone (optional)</label>
+          <input type="tel" id="phone" formControlName="phone">
+          @if (f.phone.touched && f.phone.errors) {
+            <div class="error-message">
+              Please enter a valid phone number (e.g., 123-456-7890)
+            </div>
+          }
+        </div>
+
+        <div class="form-group">
+          <label for="message">Message</label>
+          <textarea id="message" formControlName="message"></textarea>
+          @if (f.message.touched && f.message.errors) {
+            <div class="error-message">
+              @if (f.message.errors['required']) {
+                <div>Message is required</div>
+              }
+              @if (f.message.errors['minlength']) {
+                <div>Message must be at least 10 characters</div>
+              }
+            </div>
+          }
+        </div>
+
+        <button type="submit" class="submit-btn" [disabled]="contactForm.invalid || isLoading">
+          @if (isLoading) {
+            Sending...
+          } @else {
+            Send Message
+          }
+        </button>
+      </form>
+    </div>
+  } @else {
+    <div class="thank-you-message">
+      <h2>Thank You!</h2>
+      <p>We've received your message and will get back to you soon.</p>
+      <button (click)="isSubmitted = false" class="submit-btn">Send Another Message</button>
+    </div>
+  }
+</div>
